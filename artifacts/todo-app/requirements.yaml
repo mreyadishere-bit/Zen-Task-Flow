@@ -1,0 +1,21 @@
+packages:
+  "framer-motion": "Animations for task completion, layout changes, and micro-interactions"
+  "@dnd-kit/core": "Drag and drop functionality for tasks"
+  "@dnd-kit/sortable": "Sortable lists for task reordering"
+  "@dnd-kit/utilities": "Utilities for dnd-kit"
+  "canvas-confetti": "Satisfying completion animation when all tasks are done"
+  "@types/canvas-confetti": "TypeScript definitions for canvas-confetti"
+  "date-fns": "Date formatting and comparisons"
+  "clsx": "Utility for constructing className strings conditionally"
+  "tailwind-merge": "Utility function to efficiently merge Tailwind CSS classes"
+  "lucide-react": "Beautiful, consistent icons"
+
+images:
+  - path: "artifacts/todo-app/public/images/empty-state.png"
+    description: "A minimal, clean 3D illustration of a slightly open notebook with a soft glowing checkmark floating above it, warm soft lighting, very clean pastel background, Apple design style"
+    aspect_ratio: "1:1"
+
+notes:
+  - "Theme persistence relies on standard tailwind dark mode class and localStorage"
+  - "Dnd-kit is used for robust drag-and-drop, paired with Framer Motion for layout animations"
+  - "API hooks are imported from @workspace/api-client-react and wrapped with optimistic updates"

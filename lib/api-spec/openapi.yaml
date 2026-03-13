@@ -1,15 +1,18 @@
 openapi: 3.1.0
 info:
-  # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: To-Do List API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: tasks
+    description: Task management
+  - name: categories
+    description: Category management
 paths:
   /healthz:
     get:
@@ -24,6 +27,202 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /tasks:
+    get:
+      operationId: getTasks
+      tags: [tasks]
+      summary: Get all tasks
+      parameters:
+        - name: focusMode
+          in: query
+          schema:
+            type: boolean
+          description: If true, return only today's tasks
+        - name: categoryId
+          in: query
+          schema:
+            type: integer
+          description: Filter by category
+      responses:
+        "200":
+          description: List of tasks
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Task"
+    post:
+      operationId: createTask
+      tags: [tasks]
+      summary: Create a new task
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateTaskRequest"
+      responses:
+        "201":
+          description: Task created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
+
+  /tasks/{id}:
+    get:
+      operationId: getTask
+      tags: [tasks]
+      summary: Get a task by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Task found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
+        "404":
+          description: Task not found
+    put:
+      operationId: updateTask
+      tags: [tasks]
+      summary: Update a task
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateTaskRequest"
+      responses:
+        "200":
+          description: Task updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
+        "404":
+          description: Task not found
+    delete:
+      operationId: deleteTask
+      tags: [tasks]
+      summary: Delete a task
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Task deleted
+        "404":
+          description: Task not found
+
+  /tasks/reorder:
+    post:
+      operationId: reorderTasks
+      tags: [tasks]
+      summary: Reorder tasks (drag-and-drop)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReorderTasksRequest"
+      responses:
+        "200":
+          description: Tasks reordered
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Task"
+
+  /categories:
+    get:
+      operationId: getCategories
+      tags: [categories]
+      summary: Get all categories
+      responses:
+        "200":
+          description: List of categories
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Category"
+    post:
+      operationId: createCategory
+      tags: [categories]
+      summary: Create a new category
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateCategoryRequest"
+      responses:
+        "201":
+          description: Category created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Category"
+
+  /categories/{id}:
+    put:
+      operationId: updateCategory
+      tags: [categories]
+      summary: Update a category
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateCategoryRequest"
+      responses:
+        "200":
+          description: Category updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Category"
+    delete:
+      operationId: deleteCategory
+      tags: [categories]
+      summary: Delete a category
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Category deleted
+
 components:
   schemas:
     HealthStatus:
@@ -34,3 +233,143 @@ components:
       required:
         - status
 
+    Priority:
+      type: string
+      enum: [low, medium, high, urgent]
+
+    Task:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        description:
+          type: string
+          nullable: true
+        completed:
+          type: boolean
+        priority:
+          $ref: "#/components/schemas/Priority"
+        categoryId:
+          type: integer
+          nullable: true
+        dueDate:
+          type: string
+          nullable: true
+        sortOrder:
+          type: integer
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+        completedAt:
+          type: string
+          nullable: true
+      required:
+        - id
+        - title
+        - completed
+        - priority
+        - sortOrder
+        - createdAt
+        - updatedAt
+
+    CreateTaskRequest:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+          nullable: true
+        priority:
+          $ref: "#/components/schemas/Priority"
+        categoryId:
+          type: integer
+          nullable: true
+        dueDate:
+          type: string
+          nullable: true
+      required:
+        - title
+        - priority
+
+    UpdateTaskRequest:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+          nullable: true
+        completed:
+          type: boolean
+        priority:
+          $ref: "#/components/schemas/Priority"
+        categoryId:
+          type: integer
+          nullable: true
+        dueDate:
+          type: string
+          nullable: true
+        sortOrder:
+          type: integer
+
+    ReorderTasksRequest:
+      type: object
+      properties:
+        orderedIds:
+          type: array
+          items:
+            type: integer
+      required:
+        - orderedIds
+
+    Category:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        color:
+          type: string
+        icon:
+          type: string
+          nullable: true
+        taskCount:
+          type: integer
+        completedCount:
+          type: integer
+      required:
+        - id
+        - name
+        - color
+        - taskCount
+        - completedCount
+
+    CreateCategoryRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        color:
+          type: string
+        icon:
+          type: string
+          nullable: true
+      required:
+        - name
+        - color
+
+    UpdateCategoryRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        color:
+          type: string
+        icon:
+          type: string
+          nullable: true
