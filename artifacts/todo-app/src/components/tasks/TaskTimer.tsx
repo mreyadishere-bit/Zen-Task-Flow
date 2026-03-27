@@ -240,7 +240,7 @@ export function TaskTimer({ taskId, onActiveChange }: TaskTimerProps) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -8, scale: 0.95 }}
             transition={{ duration: 0.15 }}
-            className="absolute right-0 bottom-full mb-2 z-50 bg-popover border border-popover-border rounded-2xl shadow-xl p-3 w-52"
+            className="absolute right-0 bottom-full mb-2 z-50 bg-card border border-card-border rounded-2xl shadow-lg p-3 w-52"
             onClick={e => e.stopPropagation()}
           >
             <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mb-2.5 px-1">
