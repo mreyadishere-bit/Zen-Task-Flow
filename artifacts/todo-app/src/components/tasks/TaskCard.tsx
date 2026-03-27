@@ -7,6 +7,7 @@ import { format } from "date-fns";
 import type { Task, Category } from "@workspace/api-client-react";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
+import { TaskTimer } from "./TaskTimer";
 
 interface TaskCardProps {
   task: Task;
@@ -26,6 +27,7 @@ const priorityColors = {
 export function TaskCard({ task, category, onToggle, onDelete, onEdit }: TaskCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [timerActive, setTimerActive] = useState(false);
 
   const {
     attributes,
@@ -140,22 +142,35 @@ export function TaskCard({ task, category, onToggle, onDelete, onEdit }: TaskCar
       </div>
 
       {/* Actions */}
-      <div className={cn(
-        "flex items-center gap-1 transition-opacity duration-200",
-        isHovered || isDragging ? "opacity-100" : "opacity-0 md:opacity-0 opacity-100"
-      )}>
-        <button
-          onClick={() => onEdit(task)}
-          className="p-2 text-muted-foreground hover:text-primary hover:bg-primary/10 rounded-lg transition-colors"
-        >
-          <Edit2 className="w-4 h-4" />
-        </button>
-        <button
-          onClick={handleDelete}
-          className="p-2 text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-lg transition-colors"
-        >
-          <Trash2 className="w-4 h-4" />
-        </button>
+      <div className="flex items-center gap-1">
+        {/* Timer — stays visible when active regardless of hover */}
+        <div className={cn(
+          "transition-opacity duration-200",
+          isHovered || isDragging || timerActive ? "opacity-100" : "opacity-0"
+        )}>
+          <TaskTimer
+            taskId={task.id}
+            onActiveChange={setTimerActive}
+          />
+        </div>
+
+        <div className={cn(
+          "flex items-center gap-1 transition-opacity duration-200",
+          isHovered || isDragging ? "opacity-100" : "opacity-0"
+        )}>
+          <button
+            onClick={() => onEdit(task)}
+            className="p-2 text-muted-foreground hover:text-primary hover:bg-primary/10 rounded-lg transition-colors"
+          >
+            <Edit2 className="w-4 h-4" />
+          </button>
+          <button
+            onClick={handleDelete}
+            className="p-2 text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-lg transition-colors"
+          >
+            <Trash2 className="w-4 h-4" />
+          </button>
+        </div>
       </div>
     </motion.div>
   );
