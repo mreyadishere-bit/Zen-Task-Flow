@@ -14,7 +14,7 @@ export function PageNav() {
 
   return (
     <div className="flex justify-center mt-4">
-      <div className="flex items-center gap-1 bg-muted/60 rounded-2xl p-1">
+      <div className="flex items-center gap-1 bg-muted/60 rounded-2xl p-1 mt-[0px] mb-[20px]">
         {tabs.map(({ href, label, icon: Icon }) => {
           const active = href === "/" ? location === "/" : location.startsWith(href);
           return (
