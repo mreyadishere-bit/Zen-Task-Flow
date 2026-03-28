@@ -45,7 +45,6 @@ export function Header({ progress, focusMode, onToggleFocusMode }: HeaderProps) 
 
           <div className="flex items-center gap-3">
             <div className="hidden sm:flex flex-col items-end">
-              <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Progress</span>
               <ProgressCircle progress={progress || 0} size={40} strokeWidth={4} />
             </div>
 
