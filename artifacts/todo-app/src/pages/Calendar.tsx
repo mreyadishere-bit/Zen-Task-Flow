@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, Check } from "lucide-react";
+import { PageNav } from "@/components/layout/PageNav";
 import {
   format,
   startOfMonth,
@@ -36,24 +37,27 @@ export default function CalendarPage() {
   const isCurrentMonth = isSameMonth(viewDate, today);
 
   return (
-    <div className="min-h-screen pb-28">
+    <div className="min-h-screen pb-12">
       {/* Header */}
-      <div className="sticky top-0 z-40 w-full border-b border-border/50 bg-background/95 backdrop-blur pb-4 pt-6 px-4 md:px-8 mb-8">
-        <div className="max-w-2xl mx-auto flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-display font-bold text-foreground">Calendar</h1>
-            <p className="text-muted-foreground font-medium">{format(today, "EEEE, MMMM do")}</p>
+      <div className="sticky top-0 z-40 w-full border-b border-border/50 bg-background/95 backdrop-blur pb-0 pt-6 px-4 md:px-8 mb-6">
+        <div className="max-w-2xl mx-auto">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h1 className="text-3xl font-display font-bold text-foreground">Calendar</h1>
+              <p className="text-sm text-muted-foreground font-medium">{format(today, "EEEE, MMMM do")}</p>
+            </div>
+            {!isCurrentMonth && (
+              <motion.button
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                onClick={goToToday}
+                className="text-xs font-semibold px-3 py-1.5 rounded-full bg-primary text-primary-foreground hover:opacity-90 transition-opacity"
+              >
+                Today
+              </motion.button>
+            )}
           </div>
-          {!isCurrentMonth && (
-            <motion.button
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              onClick={goToToday}
-              className="text-xs font-semibold px-3 py-1.5 rounded-full bg-primary text-primary-foreground hover:opacity-90 transition-opacity"
-            >
-              Today
-            </motion.button>
-          )}
+          <PageNav />
         </div>
       </div>
 
