@@ -6,6 +6,7 @@ import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
 import CalendarPage from "@/pages/Calendar";
 import { useTheme } from "@/hooks/use-theme";
+import { StoreProvider } from "@/context/StoreContext";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -34,14 +35,16 @@ function ThemeWrapper({ children }: { children: React.ReactNode }) {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <ThemeWrapper>
-          <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-            <Router />
-          </WouterRouter>
-          <Toaster />
-        </ThemeWrapper>
-      </TooltipProvider>
+      <StoreProvider>
+        <TooltipProvider>
+          <ThemeWrapper>
+            <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
+              <Router />
+            </WouterRouter>
+            <Toaster />
+          </ThemeWrapper>
+        </TooltipProvider>
+      </StoreProvider>
     </QueryClientProvider>
   );
 }

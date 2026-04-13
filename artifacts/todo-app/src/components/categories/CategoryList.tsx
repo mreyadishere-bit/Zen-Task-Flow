@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Plus } from "lucide-react";
-import type { Category } from "@workspace/api-client-react";
+import type { Category } from "@/lib/local-store";
 import { cn } from "@/lib/utils";
 
 interface CategoryListProps {

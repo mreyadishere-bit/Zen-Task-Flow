@@ -25,7 +25,7 @@ import { TaskInput } from "@/components/tasks/TaskInput";
 import { EditTaskDialog } from "@/components/tasks/EditTaskDialog";
 import { fireConfetti } from "@/components/ui/confetti";
 import { cn } from "@/lib/utils";
-import type { Task } from "@workspace/api-client-react";
+import type { Task } from "@/lib/local-store";
 
 export default function Home() {
   const [activeCategoryId, setActiveCategoryId] = useState<number | null>(null);

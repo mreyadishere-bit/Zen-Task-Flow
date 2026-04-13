@@ -4,7 +4,7 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { GripVertical, Check, Trash2, Edit2, Calendar } from "lucide-react";
 import { format } from "date-fns";
-import type { Task, Category } from "@workspace/api-client-react";
+import type { Task, Category } from "@/lib/local-store";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { TaskTimer } from "./TaskTimer";

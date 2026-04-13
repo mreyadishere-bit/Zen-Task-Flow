@@ -3,7 +3,7 @@ import { Plus, Tag, Flag, Calendar as CalendarIcon, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAppCreateTask } from "@/hooks/use-tasks-api";
 import { Button } from "@/components/ui/button";
-import type { Category, Priority } from "@workspace/api-client-react";
+import type { Category, Priority } from "@/lib/local-store";
 import { cn } from "@/lib/utils";
 
 interface TaskInputProps {

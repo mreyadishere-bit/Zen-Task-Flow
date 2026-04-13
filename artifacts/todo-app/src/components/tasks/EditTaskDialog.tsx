@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import type { Task, Category, Priority } from "@workspace/api-client-react";
+import type { Task, Category, Priority } from "@/lib/local-store";
 import { Button } from "@/components/ui/button";
 import { useAppUpdateTask } from "@/hooks/use-tasks-api";
 import { cn } from "@/lib/utils";

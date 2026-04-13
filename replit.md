@@ -52,6 +52,8 @@ React + Vite app at `/` (port 25230 in dev).
 - Satisfying task completion animation (framer-motion + confetti)
 - Motivational message when all tasks complete
 
+**Data storage:** All tasks and categories are saved in browser `localStorage` on the device where the app is opened. No server or database is required. Data is device-local and persists across page refreshes.
+
 **Key files:**
 - `src/pages/Home.tsx` — main page
 - `src/components/tasks/TaskCard.tsx` — draggable task card
@@ -59,7 +61,9 @@ React + Vite app at `/` (port 25230 in dev).
 - `src/components/tasks/EditTaskDialog.tsx` — edit modal
 - `src/components/categories/CategoryList.tsx` — category filter tabs
 - `src/components/layout/Header.tsx` — header with progress + theme toggle
-- `src/hooks/use-tasks-api.ts` — React Query hooks
+- `src/hooks/use-tasks-api.ts` — hooks wrapping the local store (same interface as before)
+- `src/context/StoreContext.tsx` — React context providing reactive localStorage state
+- `src/lib/local-store.ts` — localStorage CRUD operations (tasks, categories)
 - `src/hooks/use-theme.ts` — dark/light mode hook
 - `src/index.css` — design tokens (HSL color palette)
 
