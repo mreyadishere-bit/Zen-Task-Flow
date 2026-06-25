@@ -8,8 +8,9 @@ import CalendarPage from "@/pages/Calendar";
 import DisciplinePage from "@/pages/Discipline";
 import { useTheme } from "@/hooks/use-theme";
 import { StoreProvider } from "@/context/StoreContext";
-import { TimerProvider } from "@/context/TimerContext";
+import { TimerProvider, useTimer } from "@/context/TimerContext";
 import { FocusTimerPanel } from "@/components/focus/FocusTimerPanel";
+import { cn } from "@/lib/utils";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -36,6 +37,27 @@ function ThemeWrapper({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
 
+function SplitLayout({ children }: { children: React.ReactNode }) {
+  const { isPanelOpen } = useTimer();
+  return (
+    <div className="flex min-h-screen">
+      {/* Content side — shrinks to make room for the timer panel */}
+      <div
+        className={cn(
+          "min-w-0 overflow-x-hidden transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]",
+          isPanelOpen
+            ? "w-full md:w-[60%] lg:w-1/2"
+            : "w-full"
+        )}
+      >
+        {children}
+      </div>
+      {/* Timer panel — fixed right side */}
+      <FocusTimerPanel />
+    </div>
+  );
+}
+
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
@@ -44,9 +66,10 @@ function App() {
           <TooltipProvider>
             <ThemeWrapper>
               <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-                <Router />
+                <SplitLayout>
+                  <Router />
+                </SplitLayout>
               </WouterRouter>
-              <FocusTimerPanel />
               <Toaster />
             </ThemeWrapper>
           </TooltipProvider>

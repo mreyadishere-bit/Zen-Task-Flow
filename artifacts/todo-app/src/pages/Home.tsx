@@ -26,8 +26,10 @@ import { EditTaskDialog } from "@/components/tasks/EditTaskDialog";
 import { fireConfetti } from "@/components/ui/confetti";
 import { cn } from "@/lib/utils";
 import type { Task } from "@/lib/local-store";
+import { useTimer } from "@/context/TimerContext";
 
 export default function Home() {
+  const { isPanelOpen } = useTimer();
   const [activeCategoryId, setActiveCategoryId] = useState<number | null>(null);
   const [focusMode, setFocusMode] = useState(false);
   const [focusedTaskId, setFocusedTaskId] = useState<number | null>(null);
@@ -348,7 +350,7 @@ export default function Home() {
         )}
       </main>
 
-      <TaskInput categories={categories} activeCategoryId={activeCategoryId} />
+      {!isPanelOpen && <TaskInput categories={categories} activeCategoryId={activeCategoryId} />}
       
       <AnimatePresence>
         {editingTask && (
