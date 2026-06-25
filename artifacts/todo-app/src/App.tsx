@@ -8,6 +8,8 @@ import CalendarPage from "@/pages/Calendar";
 import DisciplinePage from "@/pages/Discipline";
 import { useTheme } from "@/hooks/use-theme";
 import { StoreProvider } from "@/context/StoreContext";
+import { TimerProvider } from "@/context/TimerContext";
+import { FocusTimerPanel } from "@/components/focus/FocusTimerPanel";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -38,14 +40,17 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <StoreProvider>
-        <TooltipProvider>
-          <ThemeWrapper>
-            <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-              <Router />
-            </WouterRouter>
-            <Toaster />
-          </ThemeWrapper>
-        </TooltipProvider>
+        <TimerProvider>
+          <TooltipProvider>
+            <ThemeWrapper>
+              <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
+                <Router />
+              </WouterRouter>
+              <FocusTimerPanel />
+              <Toaster />
+            </ThemeWrapper>
+          </TooltipProvider>
+        </TimerProvider>
       </StoreProvider>
     </QueryClientProvider>
   );

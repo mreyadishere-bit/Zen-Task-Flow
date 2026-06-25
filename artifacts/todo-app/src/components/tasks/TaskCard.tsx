@@ -2,12 +2,12 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { GripVertical, Check, Trash2, Edit2, Calendar } from "lucide-react";
+import { GripVertical, Check, Trash2, Edit2, Calendar, Timer } from "lucide-react";
 import { format } from "date-fns";
 import type { Task, Category } from "@/lib/local-store";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
-import { TaskTimer } from "./TaskTimer";
+import { useTimer } from "@/context/TimerContext";
 
 interface TaskCardProps {
   task: Task;
@@ -27,7 +27,9 @@ const priorityColors = {
 export function TaskCard({ task, category, onToggle, onDelete, onEdit }: TaskCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
-  const [timerActive, setTimerActive] = useState(false);
+  const { openTimer, activeTask, isPanelOpen } = useTimer();
+
+  const isTimerActive = isPanelOpen && activeTask?.id === task.id;
 
   const {
     attributes,
@@ -49,7 +51,7 @@ export function TaskCard({ task, category, onToggle, onDelete, onEdit }: TaskCar
 
   const handleDelete = () => {
     setIsDeleting(true);
-    setTimeout(() => onDelete(task.id), 300); // Wait for exit animation
+    setTimeout(() => onDelete(task.id), 300);
   };
 
   return (
@@ -65,15 +67,16 @@ export function TaskCard({ task, category, onToggle, onDelete, onEdit }: TaskCar
       className={cn(
         "relative group flex items-center gap-4 p-4 rounded-2xl bg-card border border-card-border shadow-sm transition-all duration-300",
         isDragging && "opacity-50 shadow-xl scale-[1.02] z-50",
-        task.completed && "opacity-60 bg-muted/30"
+        task.completed && "opacity-60 bg-muted/30",
+        isTimerActive && "ring-2 ring-primary/30 border-primary/20"
       )}
     >
       {/* Priority Indicator */}
-      <div 
+      <div
         className={cn(
           "absolute left-0 top-1/2 -translate-y-1/2 w-1.5 h-10 rounded-r-full transition-colors",
           priorityColors[task.priority]
-        )} 
+        )}
       />
 
       {/* Drag Handle */}
@@ -90,8 +93,8 @@ export function TaskCard({ task, category, onToggle, onDelete, onEdit }: TaskCar
         onClick={handleToggle}
         className={cn(
           "relative flex-shrink-0 w-7 h-7 rounded-full border-2 transition-all duration-300 flex items-center justify-center outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-          task.completed 
-            ? "bg-primary border-primary" 
+          task.completed
+            ? "bg-primary border-primary"
             : "border-muted-foreground/30 hover:border-primary/50 bg-background"
         )}
       >
@@ -112,7 +115,7 @@ export function TaskCard({ task, category, onToggle, onDelete, onEdit }: TaskCar
       {/* Content */}
       <div className="flex-1 min-w-0 py-1 cursor-pointer" onClick={() => onEdit(task)}>
         <div className="flex items-center gap-2 mb-1">
-          <span 
+          <span
             className={cn(
               "font-semibold text-base transition-all duration-300 truncate",
               task.completed ? "line-through text-muted-foreground" : "text-foreground"
@@ -127,10 +130,10 @@ export function TaskCard({ task, category, onToggle, onDelete, onEdit }: TaskCar
             </Badge>
           )}
         </div>
-        
+
         <div className="flex items-center gap-3 text-xs text-muted-foreground">
           {task.description && (
-             <span className="truncate max-w-[200px]">{task.description}</span>
+            <span className="truncate max-w-[200px]">{task.description}</span>
           )}
           {task.dueDate && (
             <span className="flex items-center gap-1">
@@ -143,15 +146,23 @@ export function TaskCard({ task, category, onToggle, onDelete, onEdit }: TaskCar
 
       {/* Actions */}
       <div className="flex items-center gap-1">
-        {/* Timer — stays visible when active regardless of hover */}
+        {/* Focus Timer button */}
         <div className={cn(
           "transition-opacity duration-200",
-          isHovered || isDragging || timerActive ? "opacity-100" : "opacity-0"
+          isHovered || isDragging || isTimerActive ? "opacity-100" : "opacity-0"
         )}>
-          <TaskTimer
-            taskId={task.id}
-            onActiveChange={setTimerActive}
-          />
+          <button
+            onClick={() => openTimer(task)}
+            title="Start focus timer"
+            className={cn(
+              "p-2 rounded-lg transition-all duration-200",
+              isTimerActive
+                ? "text-primary bg-primary/10"
+                : "text-muted-foreground hover:text-primary hover:bg-primary/10"
+            )}
+          >
+            <Timer className="w-4 h-4" />
+          </button>
         </div>
 
         <div className={cn(
