@@ -1,0 +1,128 @@
+Refine the Focus Timer into a world-class, ultra-minimal productivity sidebar that feels completely native to the existing application. Preserve the current dark theme, typography system, color palette, spacing scale, component styling, animations, and overall design language exactly. The timer must feel like it was designed as part of the product from the beginning, not added later.
+
+## Layout
+
+* The Focus Timer sidebar occupies exactly **30% of the viewport width**.
+* The main workspace remains fully visible and functional within the remaining 70%.
+* The sidebar slides in smoothly from the right with premium motion and subtle easing.
+* Use a soft shadow transition or subtle surface separation instead of visible borders.
+* Maintain perfect visual balance with no wasted space and no cramped areas.
+* Every element should feel intentionally placed with exceptional spacing and alignment.
+
+## Focus Timer Centerpiece
+
+* The timer is the primary visual focus of the sidebar.
+* Use a large circular progress ring optimized for a 30% width panel.
+* Increase the ring size significantly compared to the current version while maintaining comfortable margins.
+* Use a thin, elegant progress stroke with fluid animation.
+* Add a subtle glow and refined depth consistent with the existing design system.
+* Perfectly center the timer composition both horizontally and visually within the panel.
+* Add a faint radial spotlight behind the timer to naturally draw attention without becoming noticeable.
+* The timer should feel like the heart of the entire experience.
+
+## Timer Typography (Highest Priority)
+
+* The countdown timer typography must be the most visually refined element in the application.
+* Use a premium modern font stack optimized for numeric readability (SF Pro Display style, Inter Tight, Geist, or equivalent).
+* Enable tabular numerals so digits never shift horizontally while counting.
+* Apply perfect optical kerning and spacing.
+* Maintain flawless baseline alignment between numbers and separators.
+* Ensure colons are perfectly aligned and visually balanced.
+* Use large typography with carefully chosen weight for maximum elegance and readability.
+* Numbers should feel stable, precise, and luxurious.
+* No jittering, flickering, resizing, or layout shifts while counting down.
+* Use subtle contrast hierarchy so the timer naturally commands attention.
+* Ensure beautiful rendering across all durations:
+
+  * 05:00
+  * 25:00
+  * 45:00
+  * 01:25:45
+* The timer should feel comparable to the quality of Apple system apps, Linear, Arc Browser, Raycast, and other world-class software.
+
+## Task Information
+
+* Display the active task title directly beneath the timer.
+* Establish clear hierarchy between timer, task name, and supporting information.
+* Use concise, elegant typography.
+* Add a minimal session progress indicator beneath the task title.
+* Show only essential information.
+
+## Custom Timer Experience
+
+* Include a beautifully designed Custom Timer feature.
+* Provide quick preset durations:
+
+  * 15 min
+  * 25 min
+  * 45 min
+  * 60 min
+  * 90 min
+* Allow users to create fully custom durations through an elegant time picker.
+* The custom timer setup should feel effortless and integrated.
+* Presets and custom controls should appear only when relevant to avoid clutter.
+* Smoothly transition between setup mode and active timer mode.
+* Maintain visual consistency with the rest of the sidebar.
+
+## Controls
+
+Keep only essential actions:
+
+* Pause / Resume
+* Reset
+* End Session
+
+Design requirements:
+
+* Use elegant icon-only controls.
+* Remove boxed buttons and heavy containers.
+* Use refined hover, focus, and pressed states.
+* Ensure perfect alignment and spacing.
+* Controls should feel lightweight and premium.
+
+## Visual Design
+
+* Embrace extreme simplicity.
+* Remove unnecessary labels, cards, borders, outlines, separators, and visual noise.
+* Build hierarchy using spacing, typography, scale, and contrast rather than extra UI elements.
+* Use refined dark surfaces with subtle depth.
+* Add soft shadows only where they improve hierarchy.
+* Maintain pixel-perfect alignment across all elements.
+* Ensure every visual detail feels intentional.
+
+## Motion & Interactions
+
+* Smooth sidebar entrance and exit.
+* Fluid timer ring progression.
+* Subtle micro-interactions on controls and timer presets.
+* Premium transitions between:
+
+  * Idle
+  * Setup
+  * Running
+  * Paused
+  * Completed
+* Use restrained motion that feels sophisticated and distraction-free.
+* Avoid flashy or excessive animations.
+
+## Completion Experience
+
+When a session ends:
+
+* Show an elegant completion state.
+* Use a subtle celebration effect.
+* Display a clean completion message.
+* Provide quick actions:
+
+  * Start Again
+  * Repeat Session
+  * Return to Work
+* Keep the experience professional, minimal, and satisfying.
+
+## Design Quality Standards
+
+The final result should feel production-ready and indistinguishable from a professionally designed feature shipped by Apple, Linear, Arc Browser, Raycast, Notion Calendar, or a top-tier SaaS product.
+
+The sidebar must never feel empty, overcrowded, generic, or template-based. Every pixel, animation, spacing decision, typography choice, interaction, and visual detail should contribute to a calm, focused, premium experience.
+
+Success is achieved when the timer immediately becomes the visual centerpiece of the application while remaining perfectly integrated with the existing website design system and preserving maximum usability.

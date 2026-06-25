@@ -46,7 +46,7 @@ function SplitLayout({ children }: { children: React.ReactNode }) {
         className={cn(
           "min-w-0 overflow-x-hidden transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]",
           isPanelOpen
-            ? "w-full md:w-[60%] lg:w-1/2"
+            ? "w-full md:w-[60%] lg:w-[70%]"
             : "w-full"
         )}
       >
