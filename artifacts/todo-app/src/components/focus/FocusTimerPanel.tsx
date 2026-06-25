@@ -213,7 +213,7 @@ export function FocusTimerPanel() {
           <AnimatePresence mode="wait">
             {isDone ? (
               /* ── Completion ── */
-              <motion.div
+              (<motion.div
                 key="done"
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -227,7 +227,6 @@ export function FocusTimerPanel() {
                 >
                   <CheckCircle2 className="w-9 h-9" style={{ color: RING_BLUE }} strokeWidth={1.5} />
                 </div>
-
                 <div className="text-center">
                   <p className="text-lg font-semibold" style={{ color: TEXT_PRIMARY }}>
                     Session complete
@@ -238,7 +237,6 @@ export function FocusTimerPanel() {
                     </p>
                   )}
                 </div>
-
                 <div className="flex flex-col items-center gap-2 w-full max-w-[200px]">
                   <button
                     onClick={reset}
@@ -262,10 +260,10 @@ export function FocusTimerPanel() {
                     Return to work <ArrowRight className="w-3.5 h-3.5" />
                   </button>
                 </div>
-              </motion.div>
+              </motion.div>)
             ) : (
               /* ── Active timer ── */
-              <motion.div
+              (<motion.div
                 key="active"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -282,7 +280,6 @@ export function FocusTimerPanel() {
                     {activeTask.title}
                   </p>
                 )}
-
                 {/* Ring + countdown */}
                 <div className="relative flex items-center justify-center">
                   {/* Ambient glow behind ring */}
@@ -343,10 +340,10 @@ export function FocusTimerPanel() {
                   </svg>
 
                   {/* Center content */}
-                  <div className="absolute inset-0 flex flex-col items-center justify-center gap-3">
+                  <div className="absolute inset-0 flex gap-3 justify-center items-center flex-col">
                     {/* Countdown */}
                     <span
-                      className="tabular-nums leading-none font-bold tracking-tight"
+                      className="tabular-nums font-bold tracking-tight text-[35px] text-center"
                       style={{
                         color: TEXT_PRIMARY,
                         fontSize: "2.75rem",
@@ -374,7 +371,6 @@ export function FocusTimerPanel() {
                     )}
                   </div>
                 </div>
-
                 {/* Controls */}
                 <div className="flex items-center gap-5">
                   {/* Reset */}
@@ -392,8 +388,7 @@ export function FocusTimerPanel() {
                   <button
                     onClick={isRunning ? pause : start}
                     title={isRunning ? "Pause" : "Start"}
-                    className="w-16 h-16 rounded-full flex items-center justify-center transition-all active:scale-90 hover:opacity-90"
-                    style={{ background: RING_BLUE }}
+                    className="w-16 h-16 rounded-full flex items-center justify-center transition-all active:scale-90 hover:opacity-90 bg-[#ffffff1a] opacity-[1] text-[#f7f5f3]"
                   >
                     <AnimatePresence mode="wait">
                       {isRunning ? (
@@ -423,7 +418,6 @@ export function FocusTimerPanel() {
                   {/* Spacer to visually balance */}
                   <div className="w-14 h-14" />
                 </div>
-
                 {/* Preset chips + Custom */}
                 <div className="flex flex-col items-center gap-3 w-full px-4">
                   <div className="flex items-center gap-1.5 flex-wrap justify-center">
@@ -464,7 +458,7 @@ export function FocusTimerPanel() {
                     )}
                   </AnimatePresence>
                 </div>
-              </motion.div>
+              </motion.div>)
             )}
           </AnimatePresence>
         </motion.aside>
