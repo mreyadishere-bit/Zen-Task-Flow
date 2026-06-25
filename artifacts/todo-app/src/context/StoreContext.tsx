@@ -1,9 +1,10 @@
 import { createContext, useContext, useState, useCallback, type ReactNode } from "react";
-import { store, type Task, type Category, type Priority } from "@/lib/local-store";
+import { store, type Task, type Category, type Priority, type CompletionEvent } from "@/lib/local-store";
 
 interface StoreContextValue {
   tasks: Task[];
   categories: Category[];
+  completions: CompletionEvent[];
   refreshTasks: () => void;
   refreshCategories: () => void;
   createTask: (data: { title: string; priority?: Priority; categoryId?: number | null; description?: string | null; dueDate?: string | null }, callbacks?: { onSuccess?: () => void }) => void;
@@ -19,6 +20,7 @@ const StoreContext = createContext<StoreContextValue | null>(null);
 export function StoreProvider({ children }: { children: ReactNode }) {
   const [tasks, setTasks] = useState<Task[]>(() => store.getTasks());
   const [categories, setCategories] = useState<Category[]>(() => store.getCategories());
+  const [completions, setCompletions] = useState<CompletionEvent[]>(() => store.getCompletions());
 
   const refreshTasks = useCallback(() => {
     setTasks(store.getTasks());
@@ -44,6 +46,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   ) => {
     store.updateTask(id, data);
     setTasks(store.getTasks());
+    setCompletions(store.getCompletions());
     callbacks?.onSuccess?.();
   }, []);
 
@@ -79,6 +82,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     <StoreContext.Provider value={{
       tasks,
       categories,
+      completions,
       refreshTasks,
       refreshCategories,
       createTask,

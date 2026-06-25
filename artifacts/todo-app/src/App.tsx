@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
 import CalendarPage from "@/pages/Calendar";
+import DisciplinePage from "@/pages/Discipline";
 import { useTheme } from "@/hooks/use-theme";
 import { StoreProvider } from "@/context/StoreContext";
 
@@ -22,6 +23,7 @@ function Router() {
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/calendar" component={CalendarPage} />
+      <Route path="/discipline" component={DisciplinePage} />
       <Route component={NotFound} />
     </Switch>
   );

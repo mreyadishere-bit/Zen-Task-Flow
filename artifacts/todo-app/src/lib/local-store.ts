@@ -9,6 +9,8 @@ export interface Task {
   categoryId: number | null;
   dueDate: string | null;
   sortOrder: number;
+  createdAt: string;
+  completedAt: string | null;
 }
 
 export interface Category {
@@ -18,15 +20,28 @@ export interface Category {
   icon: string | null;
 }
 
+export interface CompletionEvent {
+  taskId: number;
+  taskTitle: string;
+  priority: Priority;
+  completedAt: string;
+}
+
 const TASKS_KEY = "todo_app_tasks";
 const CATEGORIES_KEY = "todo_app_categories";
 const NEXT_TASK_ID_KEY = "todo_app_next_task_id";
 const NEXT_CAT_ID_KEY = "todo_app_next_cat_id";
+const COMPLETIONS_KEY = "todo_app_completions";
 
 function loadTasks(): Task[] {
   try {
     const raw = localStorage.getItem(TASKS_KEY);
-    return raw ? JSON.parse(raw) : [];
+    const tasks: Task[] = raw ? JSON.parse(raw) : [];
+    return tasks.map(t => ({
+      ...t,
+      createdAt: t.createdAt ?? new Date().toISOString(),
+      completedAt: t.completedAt ?? null,
+    }));
   } catch {
     return [];
   }
@@ -47,6 +62,19 @@ function loadCategories(): Category[] {
 
 function saveCategories(categories: Category[]): void {
   localStorage.setItem(CATEGORIES_KEY, JSON.stringify(categories));
+}
+
+function loadCompletions(): CompletionEvent[] {
+  try {
+    const raw = localStorage.getItem(COMPLETIONS_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveCompletions(events: CompletionEvent[]): void {
+  localStorage.setItem(COMPLETIONS_KEY, JSON.stringify(events));
 }
 
 function nextTaskId(): number {
@@ -82,6 +110,8 @@ export const store = {
       categoryId: data.categoryId ?? null,
       dueDate: data.dueDate ?? null,
       sortOrder: maxSort + 1,
+      createdAt: new Date().toISOString(),
+      completedAt: null,
     };
     tasks.push(task);
     saveTasks(tasks);
@@ -92,7 +122,27 @@ export const store = {
     const tasks = loadTasks();
     const index = tasks.findIndex(t => t.id === id);
     if (index === -1) return null;
+
+    const wasCompleted = tasks[index].completed;
+    const nowCompleted = data.completed;
+    const now = new Date().toISOString();
+
     tasks[index] = { ...tasks[index], ...data };
+
+    if (!wasCompleted && nowCompleted) {
+      tasks[index].completedAt = now;
+      const events = loadCompletions();
+      events.push({
+        taskId: tasks[index].id,
+        taskTitle: tasks[index].title,
+        priority: tasks[index].priority,
+        completedAt: now,
+      });
+      saveCompletions(events);
+    } else if (wasCompleted && nowCompleted === false) {
+      tasks[index].completedAt = null;
+    }
+
     saveTasks(tasks);
     return tasks[index];
   },
@@ -133,5 +183,9 @@ export const store = {
     saveCategories(categories);
     const tasks = loadTasks().map(t => t.categoryId === id ? { ...t, categoryId: null } : t);
     saveTasks(tasks);
+  },
+
+  getCompletions(): CompletionEvent[] {
+    return loadCompletions();
   },
 };

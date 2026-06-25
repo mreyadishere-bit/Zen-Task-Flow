@@ -1,11 +1,12 @@
 import { Link, useLocation } from "wouter";
-import { CheckSquare, CalendarDays } from "lucide-react";
+import { CheckSquare, CalendarDays, Zap } from "lucide-react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 const tabs = [
   { href: "/", label: "Tasks", icon: CheckSquare },
   { href: "/calendar", label: "Calendar", icon: CalendarDays },
+  { href: "/discipline", label: "Discipline", icon: Zap },
 ];
 
 export function PageNav() {
