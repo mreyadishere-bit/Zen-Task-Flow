@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Plus } from "lucide-react";
+import { Plus, Trash2 } from "lucide-react";
 import type { Category } from "@/lib/local-store";
 import { cn } from "@/lib/utils";
 
@@ -8,9 +8,10 @@ interface CategoryListProps {
   activeId: number | null;
   onSelect: (id: number | null) => void;
   onCreateNew: () => void;
+  onClearAll: () => void;
 }
 
-export function CategoryList({ categories, activeId, onSelect, onCreateNew }: CategoryListProps) {
+export function CategoryList({ categories, activeId, onSelect, onCreateNew, onClearAll }: CategoryListProps) {
   return (
     <div className="flex items-center gap-3 overflow-x-auto no-scrollbar pb-4 pt-2">
       <button
@@ -23,6 +24,15 @@ export function CategoryList({ categories, activeId, onSelect, onCreateNew }: Ca
         )}
       >
         All Tasks
+      </button>
+
+      <button
+        onClick={onClearAll}
+        title="Clear all one-time tasks"
+        className="flex-shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-full text-sm font-medium text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-all duration-300"
+      >
+        <Trash2 className="w-3.5 h-3.5" />
+        <span className="hidden sm:inline">Clear all</span>
       </button>
 
       {categories.map((category) => {
@@ -48,7 +58,7 @@ export function CategoryList({ categories, activeId, onSelect, onCreateNew }: Ca
               "ml-1 px-1.5 py-0.5 rounded-md text-[10px] bg-foreground/5",
               isActive ? "text-foreground/70" : "text-muted-foreground"
             )}>
-              {category.taskCount}
+              {category.taskCount ?? 0}
             </span>
           </button>
         );

@@ -10,9 +10,10 @@ interface HeaderProps {
   progress: number;
   focusMode: boolean;
   onToggleFocusMode: () => void;
+  title?: string;
 }
 
-export function Header({ progress, focusMode, onToggleFocusMode }: HeaderProps) {
+export function Header({ progress, focusMode, onToggleFocusMode, title }: HeaderProps) {
   const { theme, setTheme } = useTheme();
   const today = new Date();
 
@@ -24,7 +25,7 @@ export function Header({ progress, focusMode, onToggleFocusMode }: HeaderProps) 
           <div className="flex flex-col gap-0.5">
             <motion.div layout className="flex items-center gap-2">
               <h1 className="text-3xl font-display font-bold text-foreground">
-                {focusMode ? "Focus Mode" : "My Tasks"}
+                {title ?? (focusMode ? "Focus Mode" : "My Tasks")}
               </h1>
               <AnimatePresence>
                 {focusMode && (

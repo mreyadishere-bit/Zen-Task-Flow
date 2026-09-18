@@ -27,19 +27,31 @@ import { fireConfetti } from "@/components/ui/confetti";
 import { cn } from "@/lib/utils";
 import type { Task } from "@/lib/local-store";
 import { useTimer } from "@/context/TimerContext";
+import { useStore } from "@/context/StoreContext";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 export default function Home() {
   const { isPanelOpen } = useTimer();
+  const { clearOneTimeTasks } = useStore();
   const [activeCategoryId, setActiveCategoryId] = useState<number | null>(null);
   const [focusMode, setFocusMode] = useState(false);
   const [focusedTaskId, setFocusedTaskId] = useState<number | null>(null);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
+  const [isClearDialogOpen, setIsClearDialogOpen] = useState(false);
   const prevCompletedCountRef = useRef(0);
+  const todayDayOfWeek = new Date().getDay();
 
   // Data Fetching — no server-side focus filter anymore, all filtering is client-side
-  const { data: tasks = [], isLoading: isLoadingTasks } = useAppTasks({ 
-    categoryId: activeCategoryId || undefined
-  });
+  const { data: tasks = [], isLoading: isLoadingTasks } = useAppTasks();
   const { data: categories = [], isLoading: isLoadingCats } = useAppCategories();
   
   // Mutations
@@ -53,10 +65,21 @@ export default function Home() {
     useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
   );
 
+  // A saved plan for today takes precedence over the one-time inbox.
+  const tasksForToday = useMemo(() => {
+    const weeklyTasks = tasks.filter(task => task.dayOfWeek === todayDayOfWeek);
+    return weeklyTasks.length > 0
+      ? weeklyTasks
+      : tasks.filter(task => task.dayOfWeek === null);
+  }, [tasks, todayDayOfWeek]);
+
   // Derived State
   const sortedTasks = useMemo(() => {
-    return [...tasks].sort((a, b) => a.sortOrder - b.sortOrder);
-  }, [tasks]);
+    const categoryTasks = activeCategoryId === null
+      ? tasksForToday
+      : tasksForToday.filter(task => task.categoryId === activeCategoryId);
+    return [...categoryTasks].sort((a, b) => a.sortOrder - b.sortOrder);
+  }, [activeCategoryId, tasksForToday]);
 
   // In focus mode, display only the focused task (if chosen) or all tasks with "pick" buttons
   const visibleTasks = useMemo(() => {
@@ -70,11 +93,11 @@ export default function Home() {
   }, [focusedTaskId, sortedTasks]);
 
   const stats = useMemo(() => {
-    const total = tasks.length;
-    const completed = tasks.filter(t => t.completed).length;
+    const total = sortedTasks.length;
+    const completed = sortedTasks.filter(t => t.completed).length;
     const progress = total === 0 ? 0 : Math.round((completed / total) * 100);
     return { total, completed, progress };
-  }, [tasks]);
+  }, [sortedTasks]);
 
   // When focused task gets completed, exit focus (allow picking next or exiting)
   useEffect(() => {
@@ -84,6 +107,7 @@ export default function Home() {
       const t = setTimeout(() => setFocusedTaskId(null), 1500);
       return () => clearTimeout(t);
     }
+    return undefined;
   }, [focusedTask?.completed]);
 
   // Handle Confetti Check (all done)
@@ -122,6 +146,11 @@ export default function Home() {
 
   const handleDeleteTask = (id: number) => {
     deleteTask({ id });
+  };
+
+  const handleClearOneTimeTasks = () => {
+    clearOneTimeTasks();
+    setIsClearDialogOpen(false);
   };
 
   if (isLoadingTasks || isLoadingCats) {
@@ -302,6 +331,7 @@ export default function Home() {
             activeId={activeCategoryId}
             onSelect={setActiveCategoryId}
             onCreateNew={() => {}}
+            onClearAll={() => setIsClearDialogOpen(true)}
           />
         </div>
 
@@ -362,6 +392,26 @@ export default function Home() {
           />
         )}
       </AnimatePresence>
+
+      <AlertDialog open={isClearDialogOpen} onOpenChange={setIsClearDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Clear all one-time tasks?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This removes the tasks in your current inbox. Your saved Weekly Plan stays untouched, so it will still be ready when its day arrives.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Keep tasks</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleClearOneTimeTasks}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              Clear all
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

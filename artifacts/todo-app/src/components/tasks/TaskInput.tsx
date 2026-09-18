@@ -9,6 +9,8 @@ import { cn } from "@/lib/utils";
 interface TaskInputProps {
   categories: Category[];
   activeCategoryId: number | null;
+  dayOfWeek?: number | null;
+  placeholder?: string;
 }
 
 const priorities: { value: Priority; label: string; color: string }[] = [
@@ -18,7 +20,7 @@ const priorities: { value: Priority; label: string; color: string }[] = [
   { value: "urgent", label: "Urgent", color: "text-red-500" },
 ];
 
-export function TaskInput({ categories, activeCategoryId }: TaskInputProps) {
+export function TaskInput({ categories, activeCategoryId, dayOfWeek = null, placeholder = "What needs to be done?" }: TaskInputProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [title, setTitle] = useState("");
   const [priority, setPriority] = useState<Priority>("medium");
@@ -36,6 +38,7 @@ export function TaskInput({ categories, activeCategoryId }: TaskInputProps) {
           title: title.trim(),
           priority,
           categoryId,
+          dayOfWeek,
         },
       },
       {
@@ -63,7 +66,7 @@ export function TaskInput({ categories, activeCategoryId }: TaskInputProps) {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               onFocus={() => setIsExpanded(true)}
-              placeholder="What needs to be done?"
+              placeholder={placeholder}
               className="flex-1 bg-transparent border-none outline-none px-4 py-2 text-foreground placeholder:text-muted-foreground font-medium text-lg"
             />
             

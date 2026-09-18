@@ -11,6 +11,7 @@ export interface Task {
   sortOrder: number;
   createdAt: string;
   completedAt: string | null;
+  dayOfWeek: number | null;
 }
 
 export interface Category {
@@ -18,6 +19,7 @@ export interface Category {
   name: string;
   color: string;
   icon: string | null;
+  taskCount?: number;
 }
 
 export interface CompletionEvent {
@@ -41,6 +43,7 @@ function loadTasks(): Task[] {
       ...t,
       createdAt: t.createdAt ?? new Date().toISOString(),
       completedAt: t.completedAt ?? null,
+      dayOfWeek: t.dayOfWeek ?? null,
     }));
   } catch {
     return [];
@@ -98,7 +101,7 @@ export const store = {
     return tasks;
   },
 
-  createTask(data: { title: string; priority?: Priority; categoryId?: number | null; description?: string | null; dueDate?: string | null }): Task {
+  createTask(data: { title: string; priority?: Priority; categoryId?: number | null; description?: string | null; dueDate?: string | null; dayOfWeek?: number | null }): Task {
     const tasks = loadTasks();
     const maxSort = tasks.length > 0 ? Math.max(...tasks.map(t => t.sortOrder)) : -1;
     const task: Task = {
@@ -112,6 +115,7 @@ export const store = {
       sortOrder: maxSort + 1,
       createdAt: new Date().toISOString(),
       completedAt: null,
+      dayOfWeek: data.dayOfWeek ?? null,
     };
     tasks.push(task);
     saveTasks(tasks);
@@ -150,6 +154,10 @@ export const store = {
   deleteTask(id: number): void {
     const tasks = loadTasks().filter(t => t.id !== id);
     saveTasks(tasks);
+  },
+
+  clearOneTimeTasks(): void {
+    saveTasks(loadTasks().filter(t => t.dayOfWeek !== null));
   },
 
   reorderTasks(orderedIds: number[]): void {

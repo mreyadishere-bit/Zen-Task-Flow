@@ -7,10 +7,11 @@ interface StoreContextValue {
   completions: CompletionEvent[];
   refreshTasks: () => void;
   refreshCategories: () => void;
-  createTask: (data: { title: string; priority?: Priority; categoryId?: number | null; description?: string | null; dueDate?: string | null }, callbacks?: { onSuccess?: () => void }) => void;
+  createTask: (data: { title: string; priority?: Priority; categoryId?: number | null; description?: string | null; dueDate?: string | null; dayOfWeek?: number | null }, callbacks?: { onSuccess?: () => void }) => void;
   updateTask: (id: number, data: Partial<Omit<Task, "id">>, callbacks?: { onSuccess?: () => void }) => void;
   deleteTask: (id: number, callbacks?: { onSuccess?: () => void }) => void;
   reorderTasks: (orderedIds: number[], callbacks?: { onSuccess?: () => void }) => void;
+  clearOneTimeTasks: (callbacks?: { onSuccess?: () => void }) => void;
   createCategory: (data: { name: string; color: string; icon?: string | null }, callbacks?: { onSuccess?: () => void }) => void;
   deleteCategory: (id: number, callbacks?: { onSuccess?: () => void }) => void;
 }
@@ -31,7 +32,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const createTask = useCallback((
-    data: { title: string; priority?: Priority; categoryId?: number | null; description?: string | null; dueDate?: string | null },
+    data: { title: string; priority?: Priority; categoryId?: number | null; description?: string | null; dueDate?: string | null; dayOfWeek?: number | null },
     callbacks?: { onSuccess?: () => void }
   ) => {
     store.createTask(data);
@@ -58,6 +59,12 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
   const reorderTasks = useCallback((orderedIds: number[], callbacks?: { onSuccess?: () => void }) => {
     store.reorderTasks(orderedIds);
+    setTasks(store.getTasks());
+    callbacks?.onSuccess?.();
+  }, []);
+
+  const clearOneTimeTasks = useCallback((callbacks?: { onSuccess?: () => void }) => {
+    store.clearOneTimeTasks();
     setTasks(store.getTasks());
     callbacks?.onSuccess?.();
   }, []);
@@ -89,6 +96,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       updateTask,
       deleteTask,
       reorderTasks,
+      clearOneTimeTasks,
       createCategory,
       deleteCategory,
     }}>

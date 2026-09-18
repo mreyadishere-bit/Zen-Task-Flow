@@ -26,7 +26,7 @@ export function useAppCreateTask() {
   const [isPending, setIsPending] = useState(false);
 
   const mutate = (
-    args: { data: { title: string; priority?: Priority; categoryId?: number | null; description?: string | null; dueDate?: string | null } },
+    args: { data: { title: string; priority?: Priority; categoryId?: number | null; description?: string | null; dueDate?: string | null; dayOfWeek?: number | null } },
     callbacks?: { onSuccess?: () => void }
   ) => {
     setIsPending(true);

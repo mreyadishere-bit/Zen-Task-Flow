@@ -6,6 +6,7 @@ import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
 import CalendarPage from "@/pages/Calendar";
 import DisciplinePage from "@/pages/Discipline";
+import WeeklyPlanPage from "@/pages/WeeklyPlan";
 import { useTheme } from "@/hooks/use-theme";
 import { StoreProvider } from "@/context/StoreContext";
 import { TimerProvider, useTimer } from "@/context/TimerContext";
@@ -25,6 +26,7 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
+      <Route path="/weekly-plan" component={WeeklyPlanPage} />
       <Route path="/calendar" component={CalendarPage} />
       <Route path="/discipline" component={DisciplinePage} />
       <Route component={NotFound} />
