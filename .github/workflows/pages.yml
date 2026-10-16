@@ -33,6 +33,8 @@ jobs:
       - name: Support direct deep links on Pages
         run: cp artifacts/todo-app/dist/public/index.html artifacts/todo-app/dist/public/404.html
       - uses: actions/configure-pages@v5
+        with:
+          enablement: true
       - uses: actions/upload-pages-artifact@v3
         with:
           path: artifacts/todo-app/dist/public
