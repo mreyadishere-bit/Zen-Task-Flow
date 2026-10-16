@@ -12,7 +12,6 @@ const tabs = [
 
 export function PageNav() {
   const [location] = useLocation();
-  const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 
   return (
     <div className="flex justify-center mt-4">
@@ -20,7 +19,7 @@ export function PageNav() {
         {tabs.map(({ href, label, icon: Icon }) => {
           const active = href === "/" ? location === "/" : location.startsWith(href);
           return (
-            <Link key={href} href={`${base}${href}`}>
+            <Link key={href} href={href}>
               <motion.div
                 whileTap={{ scale: 0.94 }}
                 className={cn(
