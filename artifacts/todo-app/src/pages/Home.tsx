@@ -218,7 +218,7 @@ export default function Home() {
                           "w-1 h-10 rounded-full shrink-0",
                           task.priority === "urgent" && "bg-red-500",
                           task.priority === "high" && "bg-orange-500",
-                          task.priority === "medium" && "bg-amber-400",
+                          task.priority === "medium" && "task-priority-medium",
                           task.priority === "low" && "bg-green-500",
                         )} />
                         <div className="flex-1 min-w-0">
