@@ -15,7 +15,7 @@ interface TaskInputProps {
 
 const priorities: { value: Priority; label: string; color: string }[] = [
   { value: "low", label: "Low", color: "text-green-500" },
-  { value: "medium", label: "Medium", color: "text-amber-500" },
+  { value: "medium", label: "Medium", color: "task-priority-medium-text" },
   { value: "high", label: "High", color: "text-orange-500" },
   { value: "urgent", label: "Urgent", color: "text-red-500" },
 ];
