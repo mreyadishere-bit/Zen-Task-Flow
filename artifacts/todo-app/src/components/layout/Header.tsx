@@ -1,9 +1,10 @@
-import { Moon, Sun, Target } from "lucide-react";
+import { Moon, Sun, Target, Palette, Check } from "lucide-react";
 import { format } from "date-fns";
 import { useTheme } from "@/hooks/use-theme";
 import { Button } from "@/components/ui/button";
 import { ProgressCircle } from "@/components/ui/progress-circle";
 import { motion, AnimatePresence } from "framer-motion";
+import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
 import { PageNav } from "@/components/layout/PageNav";
 
 interface HeaderProps {
@@ -14,7 +15,16 @@ interface HeaderProps {
 }
 
 export function Header({ progress, focusMode, onToggleFocusMode, title }: HeaderProps) {
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme, accent, setAccent } = useTheme();
+  const palette = [
+    { id: "original", label: "Original", color: "#e9a23b" },
+    { id: "orange", label: "Orange", color: "#ed741c" },
+    { id: "blue", label: "Blue", color: "#337fe8" },
+    { id: "violet", label: "Violet", color: "#9060da" },
+    { id: "green", label: "Green", color: "#239969" },
+    { id: "rose", label: "Rose", color: "#dd426e" },
+    { id: "teal", label: "Teal", color: "#159992" },
+  ] as const;
   const today = new Date();
 
   return (
@@ -59,6 +69,29 @@ export function Header({ progress, focusMode, onToggleFocusMode, title }: Header
               >
                 <Target className="w-4 h-4" />
               </Button>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button variant="ghost" size="icon" title="Choose theme color" aria-label="Choose theme color" className="w-8 h-8 bg-background/50">
+                    <Palette className="w-4 h-4 text-primary" />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent align="end" className="w-60 p-3">
+                  <p className="text-sm font-semibold mb-3">Theme color</p>
+                  <div className="grid grid-cols-4 gap-2">
+                    {palette.map(option => (
+                      <button key={option.id} type="button" onClick={() => setAccent(option.id)}
+                        title={option.label} aria-label={option.label} aria-pressed={accent === option.id}
+                        className="flex flex-col items-center gap-1 rounded-lg p-1 hover:bg-muted focus-visible:outline-2 focus-visible:outline-primary">
+                        <span className="w-9 h-9 rounded-full flex items-center justify-center ring-1 ring-border" style={{ backgroundColor: option.color }}>
+                          {accent === option.id && <Check className="w-4 h-4 text-white drop-shadow-sm" strokeWidth={3} />}
+                        </span>
+                        <span className="text-[10px] text-muted-foreground">{option.label}</span>
+                      </button>
+                    ))}
+                  </div>
+                  <p className="mt-3 text-xs text-muted-foreground">Saved on this device</p>
+                </PopoverContent>
+              </Popover>
               <Button
                 variant="ghost"
                 size="icon"

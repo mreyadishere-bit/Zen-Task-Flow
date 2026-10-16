@@ -155,3 +155,16 @@
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
+
+:root[data-accent="orange"] { --primary: 24 95% 49%; --primary-foreground: 0 0% 100%; --ring: 24 95% 49%; }
+:root[data-accent="blue"] { --primary: 217 84% 50%; --primary-foreground: 0 0% 100%; --ring: 217 84% 50%; }
+:root[data-accent="violet"] { --primary: 263 75% 55%; --primary-foreground: 0 0% 100%; --ring: 263 75% 55%; }
+:root[data-accent="green"] { --primary: 152 65% 34%; --primary-foreground: 0 0% 100%; --ring: 152 65% 34%; }
+:root[data-accent="rose"] { --primary: 345 78% 48%; --primary-foreground: 0 0% 100%; --ring: 345 78% 48%; }
+:root[data-accent="teal"] { --primary: 178 70% 30%; --primary-foreground: 0 0% 100%; --ring: 178 70% 30%; }
+.dark[data-accent="orange"] { --primary: 32 94% 63%; --primary-foreground: 24 10% 6%; --ring: 32 94% 63%; }
+.dark[data-accent="blue"] { --primary: 211 95% 71%; --primary-foreground: 24 10% 6%; --ring: 211 95% 71%; }
+.dark[data-accent="violet"] { --primary: 265 91% 78%; --primary-foreground: 24 10% 6%; --ring: 265 91% 78%; }
+.dark[data-accent="green"] { --primary: 153 70% 64%; --primary-foreground: 24 10% 6%; --ring: 153 70% 64%; }
+.dark[data-accent="rose"] { --primary: 345 91% 77%; --primary-foreground: 24 10% 6%; --ring: 345 91% 77%; }
+.dark[data-accent="teal"] { --primary: 176 74% 63%; --primary-foreground: 24 10% 6%; --ring: 176 74% 63%; }
