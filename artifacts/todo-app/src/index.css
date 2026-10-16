@@ -168,3 +168,15 @@
 .dark[data-accent="green"] { --primary: 153 70% 64%; --primary-foreground: 24 10% 6%; --ring: 153 70% 64%; }
 .dark[data-accent="rose"] { --primary: 345 91% 77%; --primary-foreground: 24 10% 6%; --ring: 345 91% 77%; }
 .dark[data-accent="teal"] { --primary: 176 74% 63%; --primary-foreground: 24 10% 6%; --ring: 176 74% 63%; }
+
+/* Medium-priority highlights inherit the selected accent; original keeps the existing amber. */
+.task-priority-medium { background-color: hsl(var(--primary)); }
+.task-priority-medium-text { color: hsl(var(--primary)); }
+:root:not([data-accent]), :root[data-accent="original"] {
+  --medium-priority-color: #f59e0b;
+}
+:root[data-accent]:not([data-accent="original"]) {
+  --medium-priority-color: hsl(var(--primary));
+}
+.task-priority-medium { background-color: var(--medium-priority-color); }
+.task-priority-medium-text { color: var(--medium-priority-color); }
