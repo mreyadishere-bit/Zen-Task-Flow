@@ -3,6 +3,7 @@ import { Plus, Tag, Flag, Calendar as CalendarIcon, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAppCreateTask } from "@/hooks/use-tasks-api";
 import { Button } from "@/components/ui/button";
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import type { Category, Priority } from "@/lib/local-store";
 import { cn } from "@/lib/utils";
 
@@ -91,54 +92,43 @@ export function TaskInput({ categories, activeCategoryId, dayOfWeek = null, plac
                 className="flex items-center justify-between px-2 pt-2 border-t border-border/50"
               >
                 <div className="flex items-center gap-2">
-                  {/* Simple custom dropdowns for priority/category to avoid heavy radx deps if not fully available, keeping it minimal and beautiful */}
-                  <div className="relative group">
-                    <button type="button" className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg hover:bg-muted text-xs font-medium text-muted-foreground transition-colors">
-                      <Flag className={cn("w-4 h-4", priorities.find(p => p.value === priority)?.color)} />
-                      {priorities.find(p => p.value === priority)?.label}
-                    </button>
-                    <div className="absolute bottom-full left-0 mb-2 w-32 bg-popover border border-border rounded-xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 overflow-hidden">
+                  {/* Portalled click menus prevent overlapping the task input and clipping. */}
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <button type="button" className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg hover:bg-muted text-xs font-medium text-muted-foreground transition-colors" aria-label="Choose priority">
+                        <Flag className={cn("w-4 h-4", priorities.find(p => p.value === priority)?.color)} />
+                        {priorities.find(p => p.value === priority)?.label}
+                      </button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent side="top" align="start" sideOffset={12} className="w-36 rounded-xl p-1.5 shadow-xl bg-popover text-popover-foreground">
                       {priorities.map(p => (
-                        <button
-                          key={p.value}
-                          type="button"
-                          onClick={() => setPriority(p.value)}
-                          className="w-full flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted text-left"
-                        >
-                          <div className={cn("w-2 h-2 rounded-full bg-current", p.color)} />
-                          {p.label}
-                        </button>
+                        <DropdownMenuItem key={p.value} onSelect={() => setPriority(p.value)} className="flex items-center gap-2 rounded-lg py-2.5 cursor-pointer">
+                          <span className={cn("w-2 h-2 shrink-0 rounded-full bg-current", p.color)} />
+                          <span>{p.label}</span>
+                          {priority === p.value && <span className="ml-auto text-primary text-xs">✓</span>}
+                        </DropdownMenuItem>
                       ))}
-                    </div>
-                  </div>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
 
                   {categories.length > 0 && (
-                    <div className="relative group">
-                      <button type="button" className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg hover:bg-muted text-xs font-medium text-muted-foreground transition-colors">
-                        <Tag className="w-4 h-4" />
-                        {categoryId ? categories.find(c => c.id === categoryId)?.name : "Tag"}
-                      </button>
-                      <div className="absolute bottom-full left-0 mb-2 w-40 bg-popover border border-border rounded-xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 overflow-hidden max-h-48 overflow-y-auto">
-                        <button
-                          type="button"
-                          onClick={() => setCategoryId(null)}
-                          className="w-full flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted text-left text-muted-foreground"
-                        >
-                          No Tag
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <button type="button" className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg hover:bg-muted text-xs font-medium text-muted-foreground transition-colors" aria-label="Choose category">
+                          <Tag className="w-4 h-4" />
+                          {categoryId ? categories.find(c => c.id === categoryId)?.name : "Tag"}
                         </button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent side="top" align="start" sideOffset={12} className="w-44 rounded-xl p-1.5 shadow-xl bg-popover text-popover-foreground">
+                        <DropdownMenuItem onSelect={() => setCategoryId(null)} className="rounded-lg py-2.5 cursor-pointer">No Tag</DropdownMenuItem>
                         {categories.map(c => (
-                          <button
-                            key={c.id}
-                            type="button"
-                            onClick={() => setCategoryId(c.id)}
-                            className="w-full flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted text-left"
-                          >
+                          <DropdownMenuItem key={c.id} onSelect={() => setCategoryId(c.id)} className="flex items-center gap-2 rounded-lg py-2.5 cursor-pointer">
                             <span style={{ color: c.color }}>{c.icon || <Tag className="w-3 h-3" />}</span>
                             {c.name}
-                          </button>
+                          </DropdownMenuItem>
                         ))}
-                      </div>
-                    </div>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   )}
                 </div>
 
