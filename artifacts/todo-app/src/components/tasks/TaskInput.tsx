@@ -100,7 +100,7 @@ export function TaskInput({ categories, activeCategoryId, dayOfWeek = null, plac
                         {priorities.find(p => p.value === priority)?.label}
                       </button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent side="top" align="start" sideOffset={12} className="w-36 rounded-xl p-1.5 shadow-xl bg-popover text-popover-foreground border border-border">
+                    <DropdownMenuContent side="top" align="start" sideOffset={12} className="w-36 rounded-xl p-1.5 shadow-xl bg-card text-card-foreground border border-border" style={{ backgroundColor: "hsl(var(--card))", opacity: 1 }}>
                       {priorities.map(p => (
                         <DropdownMenuItem key={p.value} onSelect={() => setPriority(p.value)} className="flex items-center gap-2 rounded-lg py-2.5 cursor-pointer">
                           <span className={cn("w-2 h-2 shrink-0 rounded-full bg-current", p.color)} />
@@ -119,7 +119,7 @@ export function TaskInput({ categories, activeCategoryId, dayOfWeek = null, plac
                           {categoryId ? categories.find(c => c.id === categoryId)?.name : "Tag"}
                         </button>
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent side="top" align="start" sideOffset={12} className="w-44 rounded-xl p-1.5 shadow-xl bg-popover text-popover-foreground border border-border">
+                      <DropdownMenuContent side="top" align="start" sideOffset={12} className="w-44 rounded-xl p-1.5 shadow-xl bg-card text-card-foreground border border-border" style={{ backgroundColor: "hsl(var(--card))", opacity: 1 }}>
                         <DropdownMenuItem onSelect={() => setCategoryId(null)} className="rounded-lg py-2.5 cursor-pointer">No Tag</DropdownMenuItem>
                         {categories.map(c => (
                           <DropdownMenuItem key={c.id} onSelect={() => setCategoryId(c.id)} className="flex items-center gap-2 rounded-lg py-2.5 cursor-pointer">
