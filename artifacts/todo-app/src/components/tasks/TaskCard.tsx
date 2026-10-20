@@ -65,7 +65,7 @@ export function TaskCard({ task, category, onToggle, onDelete, onEdit }: TaskCar
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className={cn(
-        "relative group flex items-center gap-4 p-4 rounded-2xl bg-card border border-card-border shadow-sm transition-all duration-300",
+        "relative group flex min-w-0 items-center gap-2 sm:gap-4 p-3 sm:p-4 rounded-2xl bg-card border border-card-border shadow-sm transition-all duration-300",
         isDragging && "opacity-50 shadow-xl scale-[1.02] z-50",
         task.completed && "opacity-60 bg-muted/30",
         isTimerActive && "ring-2 ring-primary/30 border-primary/20"
@@ -83,7 +83,7 @@ export function TaskCard({ task, category, onToggle, onDelete, onEdit }: TaskCar
       <div
         {...attributes}
         {...listeners}
-        className="cursor-grab active:cursor-grabbing text-muted-foreground/50 hover:text-foreground p-1 rounded transition-colors pl-2"
+        className="touch-none cursor-grab active:cursor-grabbing text-muted-foreground/50 hover:text-foreground p-1 rounded transition-colors pl-1 sm:pl-2 min-w-7 min-h-10 flex items-center justify-center"
       >
         <GripVertical className="w-5 h-5" />
       </div>
@@ -92,7 +92,7 @@ export function TaskCard({ task, category, onToggle, onDelete, onEdit }: TaskCar
       <button
         onClick={handleToggle}
         className={cn(
-          "relative flex-shrink-0 w-7 h-7 rounded-full border-2 transition-all duration-300 flex items-center justify-center outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+          "relative flex-shrink-0 w-8 h-8 sm:w-7 sm:h-7 rounded-full border-2 transition-all duration-300 flex items-center justify-center outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
           task.completed
             ? "bg-primary border-primary"
             : "border-muted-foreground/30 hover:border-primary/50 bg-background"
@@ -149,7 +149,7 @@ export function TaskCard({ task, category, onToggle, onDelete, onEdit }: TaskCar
         {/* Focus Timer button */}
         <div className={cn(
           "transition-opacity duration-200",
-          isHovered || isDragging || isTimerActive ? "opacity-100" : "opacity-0"
+          isHovered || isDragging || isTimerActive ? "opacity-100" : "opacity-100 sm:opacity-0"
         )}>
           <button
             onClick={() => openTimer(task)}
@@ -167,7 +167,7 @@ export function TaskCard({ task, category, onToggle, onDelete, onEdit }: TaskCar
 
         <div className={cn(
           "flex items-center gap-1 transition-opacity duration-200",
-          isHovered || isDragging ? "opacity-100" : "opacity-0"
+          isHovered || isDragging ? "opacity-100" : "opacity-100 sm:opacity-0"
         )}>
           <button
             onClick={() => onEdit(task)}

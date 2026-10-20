@@ -39,11 +39,11 @@ export default function CalendarPage() {
   return (
     <div className="min-h-screen pb-12">
       {/* Header */}
-      <div className="sticky top-0 z-40 w-full border-b border-border/50 bg-background/95 backdrop-blur pb-0 pt-6 px-4 md:px-8 mb-6">
+      <div className="sticky top-0 z-40 w-full min-w-0 border-b border-border/50 bg-background/95 backdrop-blur pb-0 pt-3 sm:pt-6 px-3 sm:px-4 md:px-8 mb-4 sm:mb-6">
         <div className="max-w-2xl mx-auto">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h1 className="text-3xl font-display font-bold text-foreground">Calendar</h1>
+              <h1 className="text-2xl sm:text-3xl font-display font-bold text-foreground">Calendar</h1>
               <p className="text-sm text-muted-foreground font-medium">{format(today, "EEEE, MMMM do")}</p>
             </div>
             {!isCurrentMonth && (
