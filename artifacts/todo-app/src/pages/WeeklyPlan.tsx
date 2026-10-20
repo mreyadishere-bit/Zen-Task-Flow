@@ -56,9 +56,7 @@ export default function WeeklyPlan() {
             </div>
             <div>
               <h2 className="text-lg font-display font-bold text-foreground">Plan your week</h2>
-              <p className="text-sm text-muted-foreground mt-0.5">
-                Add recurring tasks to each day. On that day, they replace the one-time inbox.
-              </p>
+
             </div>
           </div>
 
@@ -116,13 +114,11 @@ export default function WeeklyPlan() {
           <motion.div
             initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="rounded-3xl border border-dashed border-border bg-card/50 px-6 py-14 text-center"
+            className="rounded-3xl border border-border bg-card px-6 py-14 text-center shadow-sm"
           >
             <Sparkles className="w-7 h-7 mx-auto text-primary/60 mb-4" />
             <p className="font-semibold text-foreground">A clear day starts here</p>
-            <p className="text-sm text-muted-foreground mt-1">
-              Add a task below to build your {selectedDayLabel} routine.
-            </p>
+
           </motion.div>
         ) : (
           <div className="flex flex-col gap-3">
