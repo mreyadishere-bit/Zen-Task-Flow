@@ -75,7 +75,7 @@ export function Header({ progress, focusMode, onToggleFocusMode, title }: Header
                     <Palette className="w-4 h-4 text-primary" />
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent align="end" className="w-60 p-3">
+                <PopoverContent align="end" className="z-[100] w-60 p-3 border border-border bg-card text-card-foreground shadow-2xl opacity-100" style={{ backgroundColor: "hsl(var(--card))", color: "hsl(var(--card-foreground))", opacity: 1, backdropFilter: "none" }}>
                   <p className="text-sm font-semibold mb-3">Theme color</p>
                   <div className="grid grid-cols-4 gap-2">
                     {palette.map(option => (
