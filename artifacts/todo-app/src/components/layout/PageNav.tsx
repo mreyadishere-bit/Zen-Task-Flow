@@ -14,8 +14,8 @@ export function PageNav() {
   const [location] = useLocation();
 
   return (
-    <div className="flex justify-center mt-4">
-      <div className="flex items-center gap-1 bg-muted/60 rounded-2xl p-1 mt-[0px] mb-[20px]">
+    <div className="flex justify-start sm:justify-center mt-3 sm:mt-4 max-w-full min-w-0 overflow-x-auto no-scrollbar overscroll-x-contain">
+      <div className="flex w-max min-w-max items-center gap-1 bg-muted/60 rounded-2xl p-1 mt-0 mb-3 sm:mb-5">
         {tabs.map(({ href, label, icon: Icon }) => {
           const active = href === "/" ? location === "/" : location.startsWith(href);
           return (
@@ -23,7 +23,7 @@ export function PageNav() {
               <motion.div
                 whileTap={{ scale: 0.94 }}
                 className={cn(
-                  "flex items-center gap-2 px-5 py-2 rounded-xl text-sm font-semibold transition-all duration-200 cursor-pointer select-none",
+                  "flex items-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-2.5 sm:py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer select-none whitespace-nowrap",
                   active
                     ? "bg-card text-foreground shadow-sm border border-border/60"
                     : "text-muted-foreground hover:text-foreground"
