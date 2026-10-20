@@ -28,13 +28,13 @@ export function Header({ progress, focusMode, onToggleFocusMode, title }: Header
   const today = new Date();
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-background/95 backdrop-blur border-b border-border/50 pb-0 pt-6 px-4 md:px-8 mb-6">
+    <header className="sticky top-0 z-40 w-full min-w-0 bg-background/95 backdrop-blur border-b border-border/50 pb-0 pt-3 sm:pt-6 px-3 sm:px-4 md:px-8 mb-4 sm:mb-6">
       <div className="max-w-2xl mx-auto">
         {/* Title row */}
         <div className="flex items-center justify-between mb-4">
           <div className="flex flex-col gap-0.5">
             <motion.div layout className="flex items-center gap-2">
-              <h1 className="text-3xl font-display font-bold text-foreground">
+              <h1 className="text-2xl sm:text-3xl font-display font-bold text-foreground leading-tight break-words">
                 {title ?? (focusMode ? "Focus Mode" : "My To Do List")}
               </h1>
               <AnimatePresence>
@@ -54,7 +54,7 @@ export function Header({ progress, focusMode, onToggleFocusMode, title }: Header
             </p>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             <div className="hidden sm:flex flex-col items-end">
               <ProgressCircle progress={progress || 0} size={40} strokeWidth={4} />
             </div>
