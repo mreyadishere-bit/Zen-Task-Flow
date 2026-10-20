@@ -182,7 +182,12 @@
 .task-priority-medium-text { color: var(--medium-priority-color); }
 
 
-/* Keep the app visually compact by default, similar to 90% browser zoom. */
-body {
-  zoom: 0.9;
+/* Mobile browsers should use the real viewport scale; avoid global zoom. */
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body { min-width: 0; overflow-x: clip; }
+
+@media (max-width: 640px) {
+  #root { min-height: 100dvh; }
+  button, [role="button"], a { -webkit-tap-highlight-color: transparent; }
+  input, textarea, select { max-width: 100%; }
 }
