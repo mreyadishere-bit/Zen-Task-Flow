@@ -120,7 +120,7 @@ function CustomInput({
           disabled={total === 0}
           className={cn(
             "px-4 py-1.5 rounded-lg text-xs font-semibold transition-all active:scale-95",
-            "bg-foreground text-background disabled:opacity-30"
+            "bg-primary text-primary-foreground disabled:opacity-30"
           )}
         >
           Set timer
@@ -221,10 +221,10 @@ export function FocusTimerPanel() {
                   <div className="relative flex items-center justify-center">
                     <svg width={SIZE} height={SIZE} viewBox={`0 0 ${SIZE} ${SIZE}`} className="-rotate-90" aria-hidden>
                       <circle cx={SIZE / 2} cy={SIZE / 2} r={R} strokeWidth={STROKE} fill="none" className="stroke-border" />
-                      <circle cx={SIZE / 2} cy={SIZE / 2} r={R} strokeWidth={STROKE} fill="none" className="stroke-foreground" strokeDasharray={CIRC} strokeDashoffset={0} strokeLinecap="round" />
+                      <circle cx={SIZE / 2} cy={SIZE / 2} r={R} strokeWidth={STROKE} fill="none" className="stroke-primary" strokeDasharray={CIRC} strokeDashoffset={0} strokeLinecap="round" />
                     </svg>
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <span className="text-foreground/70 text-base font-medium tracking-tight">Done</span>
+                      <span className="text-primary text-base font-medium tracking-tight">Done</span>
                     </div>
                   </div>
 
@@ -240,7 +240,7 @@ export function FocusTimerPanel() {
                   <div className="flex flex-col items-center gap-1.5 w-full max-w-[200px]">
                     <button
                       onClick={reset}
-                      className="w-full py-2.5 rounded-xl text-sm font-semibold bg-foreground text-background transition-all active:scale-[0.98] hover:opacity-90"
+                      className="w-full py-2.5 rounded-xl text-sm font-semibold bg-primary text-primary-foreground transition-all active:scale-[0.98] hover:opacity-90"
                     >
                       Start again
                     </button>
@@ -301,7 +301,7 @@ export function FocusTimerPanel() {
                         r={R}
                         strokeWidth={STROKE}
                         fill="none"
-                        className="stroke-foreground"
+                        className="stroke-primary"
                         strokeDasharray={CIRC}
                         strokeDashoffset={offset}
                         strokeLinecap="round"
@@ -353,7 +353,7 @@ export function FocusTimerPanel() {
                     <button
                       onClick={isRunning ? pause : start}
                       title={isRunning ? "Pause" : "Start"}
-                      className="w-14 h-14 flex items-center justify-center rounded-full bg-foreground text-background hover:opacity-85 transition-all active:scale-[0.93]"
+                      className="w-14 h-14 flex items-center justify-center rounded-full bg-primary text-primary-foreground hover:opacity-85 transition-all active:scale-[0.93]"
                     >
                       <AnimatePresence mode="wait">
                         {isRunning ? (
@@ -382,7 +382,7 @@ export function FocusTimerPanel() {
                           className={cn(
                             "px-2.5 py-1 rounded-lg text-xs font-medium transition-all duration-150",
                             totalSeconds === p.seconds && !showCustom
-                              ? "text-foreground bg-muted"
+                              ? "text-primary bg-primary/10"
                               : "text-muted-foreground/50 hover:text-muted-foreground hover:bg-muted/50"
                           )}
                         >
