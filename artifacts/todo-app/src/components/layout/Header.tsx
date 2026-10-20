@@ -35,7 +35,7 @@ export function Header({ progress, focusMode, onToggleFocusMode, title }: Header
           <div className="flex flex-col gap-0.5">
             <motion.div layout className="flex items-center gap-2">
               <h1 className="text-3xl font-display font-bold text-foreground">
-                {title ?? (focusMode ? "Focus Mode" : "My Tasks")}
+                {title ?? (focusMode ? "Focus Mode" : "My To Do List")}
               </h1>
               <AnimatePresence>
                 {focusMode && (
