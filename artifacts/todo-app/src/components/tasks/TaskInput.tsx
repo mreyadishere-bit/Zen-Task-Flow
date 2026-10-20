@@ -52,23 +52,23 @@ export function TaskInput({ categories, activeCategoryId, dayOfWeek = null, plac
   };
 
   return (
-    <div className="fixed bottom-8 left-0 right-0 px-4 z-50 pointer-events-none flex justify-center">
+    <div className="fixed bottom-[max(0.75rem,env(safe-area-inset-bottom))] sm:bottom-8 left-0 right-0 px-3 sm:px-4 z-50 pointer-events-none flex justify-center">
       <motion.div 
         layout
         className={cn(
-          "w-full max-w-2xl bg-card border border-border rounded-3xl shadow-2xl pointer-events-auto transition-all duration-300 overflow-visible",
+          "w-full max-w-2xl min-w-0 bg-card border border-border rounded-2xl sm:rounded-3xl shadow-2xl pointer-events-auto transition-all duration-300 overflow-visible",
           isExpanded ? "p-4" : "p-2"
         )}
       >
         <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-          <div className="flex items-center gap-2">
+          <div className="flex min-w-0 items-center gap-2">
             <input
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               onFocus={() => setIsExpanded(true)}
               placeholder={placeholder}
-              className="flex-1 bg-transparent border-none outline-none px-4 py-2 text-foreground placeholder:text-muted-foreground font-medium text-lg"
+              className="flex-1 min-w-0 bg-transparent border-none outline-none px-2 sm:px-4 py-2 text-foreground placeholder:text-muted-foreground font-medium text-base sm:text-lg"
             />
             
             {!isExpanded && (
@@ -89,9 +89,9 @@ export function TaskInput({ categories, activeCategoryId, dayOfWeek = null, plac
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
-                className="flex items-center justify-between px-2 pt-2 border-t border-border/50"
+                className="flex flex-wrap items-center justify-between gap-2 px-1 sm:px-2 pt-2 border-t border-border/50"
               >
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-1 sm:gap-2 min-w-0">
                   {/* Portalled click menus prevent overlapping the task input and clipping. */}
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -132,7 +132,7 @@ export function TaskInput({ categories, activeCategoryId, dayOfWeek = null, plac
                   )}
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1 sm:gap-2 ml-auto">
                   <Button 
                     type="button" 
                     variant="ghost" 
