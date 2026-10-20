@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { CalendarRange, CheckCircle2, Sparkles } from "lucide-react";
+import { CalendarRange, CheckCircle2 } from "lucide-react";
 
 import { Header } from "@/components/layout/Header";
 import { TaskCard } from "@/components/tasks/TaskCard";
@@ -116,7 +116,6 @@ export default function WeeklyPlan() {
             animate={{ opacity: 1, scale: 1 }}
             className="rounded-3xl border border-border bg-card px-6 py-14 text-center shadow-sm"
           >
-            <Sparkles className="w-7 h-7 mx-auto text-primary/60 mb-4" />
             <p className="font-semibold text-foreground">A clear day starts here</p>
 
           </motion.div>
