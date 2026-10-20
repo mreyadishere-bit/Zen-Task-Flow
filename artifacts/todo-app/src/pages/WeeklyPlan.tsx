@@ -73,14 +73,14 @@ export default function WeeklyPlan() {
                   className={[
                     "relative rounded-2xl px-2 py-3 text-center transition-all duration-200",
                     isSelected
-                      ? "bg-foreground text-background shadow-md"
-                      : "bg-muted/60 text-muted-foreground hover:bg-muted hover:text-foreground",
+                      ? "dark:bg-white dark:text-stone-950 bg-primary text-primary-foreground shadow-md"
+                      : "dark:bg-white dark:text-stone-950 bg-primary/10 text-primary hover:bg-primary/20 hover:text-primary",
                   ].join(" ")}
                 >
                   <span className="block text-xs font-semibold">{day.short}</span>
                   <span className={[
                     "block text-[10px] mt-1",
-                    isSelected ? "text-background/70" : "text-muted-foreground/70",
+                    isSelected ? "text-primary-foreground/75 dark:text-stone-700" : "text-primary/75 dark:text-stone-700",
                   ].join(" ")}>
                     {count} {count === 1 ? "task" : "tasks"}
                   </span>
