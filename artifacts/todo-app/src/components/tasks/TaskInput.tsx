@@ -52,11 +52,11 @@ export function TaskInput({ categories, activeCategoryId, dayOfWeek = null, plac
   };
 
   return (
-    <div className="fixed bottom-6 left-0 right-0 px-4 z-50 pointer-events-none flex justify-center">
+    <div className="fixed bottom-8 left-0 right-0 px-4 z-50 pointer-events-none flex justify-center">
       <motion.div 
         layout
         className={cn(
-          "w-full max-w-2xl bg-card border border-border rounded-3xl shadow-2xl pointer-events-auto transition-all duration-300 overflow-hidden",
+          "w-full max-w-2xl bg-card border border-border rounded-3xl shadow-2xl pointer-events-auto transition-all duration-300 overflow-visible",
           isExpanded ? "p-4" : "p-2"
         )}
       >
@@ -100,7 +100,7 @@ export function TaskInput({ categories, activeCategoryId, dayOfWeek = null, plac
                         {priorities.find(p => p.value === priority)?.label}
                       </button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent side="top" align="start" sideOffset={12} className="w-36 rounded-xl p-1.5 shadow-xl bg-popover text-popover-foreground">
+                    <DropdownMenuContent side="top" align="start" sideOffset={12} className="w-36 rounded-xl p-1.5 shadow-xl bg-popover text-popover-foreground border border-border">
                       {priorities.map(p => (
                         <DropdownMenuItem key={p.value} onSelect={() => setPriority(p.value)} className="flex items-center gap-2 rounded-lg py-2.5 cursor-pointer">
                           <span className={cn("w-2 h-2 shrink-0 rounded-full bg-current", p.color)} />
@@ -119,7 +119,7 @@ export function TaskInput({ categories, activeCategoryId, dayOfWeek = null, plac
                           {categoryId ? categories.find(c => c.id === categoryId)?.name : "Tag"}
                         </button>
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent side="top" align="start" sideOffset={12} className="w-44 rounded-xl p-1.5 shadow-xl bg-popover text-popover-foreground">
+                      <DropdownMenuContent side="top" align="start" sideOffset={12} className="w-44 rounded-xl p-1.5 shadow-xl bg-popover text-popover-foreground border border-border">
                         <DropdownMenuItem onSelect={() => setCategoryId(null)} className="rounded-lg py-2.5 cursor-pointer">No Tag</DropdownMenuItem>
                         {categories.map(c => (
                           <DropdownMenuItem key={c.id} onSelect={() => setCategoryId(c.id)} className="flex items-center gap-2 rounded-lg py-2.5 cursor-pointer">
